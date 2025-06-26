@@ -14,7 +14,7 @@ class PenjualanController extends Controller
      */
     public function index()
     {
-        return response()->json(Penjualan::with('product')->get());
+        return response()->json(\App\Models\Penjualan::with(['items.product'])->get());
     }
 
     /**
@@ -65,7 +65,7 @@ class PenjualanController extends Controller
      */
     public function show($id)
     {
-        $penjualan = Penjualan::with('product')->find($id);
+        $penjualan = \App\Models\Penjualan::with(['items.product'])->find($id);
         if (!$penjualan) {
             return response()->json(['message' => 'Penjualan tidak ditemukan'], 404);
         }

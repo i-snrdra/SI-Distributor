@@ -14,7 +14,7 @@ class PembelianController extends Controller
      */
     public function index()
     {
-        return response()->json(Pembelian::with(['supplier', 'product'])->get());
+        return response()->json(\App\Models\Pembelian::with(['supplier', 'items.product'])->get());
     }
 
     /**
@@ -65,7 +65,7 @@ class PembelianController extends Controller
      */
     public function show($id)
     {
-        $pembelian = Pembelian::with(['supplier', 'product'])->find($id);
+        $pembelian = \App\Models\Pembelian::with(['supplier', 'items.product'])->find($id);
         if (!$pembelian) {
             return response()->json(['message' => 'Pembelian tidak ditemukan'], 404);
         }
