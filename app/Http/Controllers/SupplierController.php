@@ -15,8 +15,14 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        // Gudang dan Admin boleh
-        return response()->json(Supplier::all());
+        try {
+            return response()->json(Supplier::all());
+        } catch (\Throwable $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ], 500);
+        }
     }
 
     /**

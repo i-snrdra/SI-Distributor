@@ -172,6 +172,48 @@
           "path": ["api", "products", "1"]
         }
       }
+    },
+    {
+      "name": "Create Penjualan (Multi Item)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nama_customer\": \"Budi\",\n  \"tanggal\": \"2025-07-01\",\n  \"items\": [\n    {\n      \"product_id\": 1,\n      \"qty\": 2\n    },\n    {\n      \"product_id\": 2,\n      \"qty\": 1\n    }\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/api/penjualans",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["api", "penjualans"]
+        }
+      }
+    },
+    {
+      "name": "Create Pembelian (Multi Item)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"supplier_id\": 1,\n  \"tanggal\": \"2025-07-01\",\n  \"items\": [\n    {\n      \"product_id\": 1,\n      \"qty\": 5\n    },\n    {\n      \"product_id\": 3,\n      \"qty\": 2\n    }\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/api/pembelians",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["api", "pembelians"]
+        }
+      }
     }
   ],
   "variable": [
