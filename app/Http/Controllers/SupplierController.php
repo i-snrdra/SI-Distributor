@@ -6,14 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Supplier;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use App\Models\UserRole;
 
 class SupplierController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum');
-    }
-
     /**
      * Display a listing of the resource.
      */
@@ -28,7 +24,7 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::user()->role !== 'admin') {
+        if (Auth::user()->role !== UserRole::Admin) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
         $validated = $request->validate([
@@ -58,7 +54,7 @@ class SupplierController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        if (Auth::user()->role !== 'admin') {
+        if (Auth::user()->role !== UserRole::Admin) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
         $supplier = Supplier::find($id);
@@ -80,7 +76,7 @@ class SupplierController extends Controller
      */
     public function destroy(string $id)
     {
-        if (Auth::user()->role !== 'admin') {
+        if (Auth::user()->role !== UserRole::Admin) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
         $supplier = Supplier::find($id);

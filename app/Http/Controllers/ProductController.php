@@ -6,14 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use App\Models\UserRole;
 
 class ProductController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum');
-    }
-
     /**
      * Display a listing of the resource.
      */
@@ -28,7 +24,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::user()->role !== 'admin') {
+        if (Auth::user()->role !== UserRole::Admin) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
         $validated = $request->validate([
@@ -60,7 +56,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        if (Auth::user()->role !== 'admin') {
+        if (Auth::user()->role !== UserRole::Admin) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
         $product = Product::find($id);
@@ -84,7 +80,7 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        if (Auth::user()->role !== 'admin') {
+        if (Auth::user()->role !== UserRole::Admin) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
         $product = Product::find($id);
