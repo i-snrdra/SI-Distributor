@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -23,6 +24,19 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SupplierSeeder::class,
             ProductSeeder::class,
+        ]);
+
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@example.com',
+            'password' => Hash::make('admin1234'),
+            'role' => 'admin',
+        ]);
+        User::create([
+            'name' => 'Gudang',
+            'email' => 'gudang@example.com',
+            'password' => Hash::make('gudang1234'),
+            'role' => 'gudang',
         ]);
     }
 }

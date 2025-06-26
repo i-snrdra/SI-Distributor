@@ -5,14 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Supplier;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class SupplierController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        // Gudang dan Admin boleh
         return response()->json(Supplier::all());
     }
 
@@ -21,6 +28,9 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
+        if (Auth::user()->role !== 'admin') {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
         $validated = $request->validate([
             'nama' => 'required|string',
             'alamat' => 'required|string',
@@ -48,6 +58,9 @@ class SupplierController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if (Auth::user()->role !== 'admin') {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
         $supplier = Supplier::find($id);
         if (!$supplier) {
             return response()->json(['message' => 'Supplier tidak ditemukan'], 404);
@@ -67,6 +80,9 @@ class SupplierController extends Controller
      */
     public function destroy(string $id)
     {
+        if (Auth::user()->role !== 'admin') {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
         $supplier = Supplier::find($id);
         if (!$supplier) {
             return response()->json(['message' => 'Supplier tidak ditemukan'], 404);
